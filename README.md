@@ -8,8 +8,8 @@
 ---
 
 ## 👤 Profil Mahasiswa
-* **Nama:** Ananda Friezy Eka Cahya
-* **NIM:** 312410151
+* **Nama:** Anthonius Dale Fernando
+* **NIM:** 312410162
 * **Kelas:** TI (Teknik Informatika)
 * **Program Studi:** Teknik Informatika
 * **Fakultas:** Teknik
