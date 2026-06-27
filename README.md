@@ -13,6 +13,9 @@
 
 ---
 
+## NOTE : Assalamualaikum temen" File praktikum berada di folder praktikum, dibagi 3 folder, 
+## berisi praktikum 1 sampai 14, dan beserta readme.md di tiap praktikum untuk laporan lengkap, Terimakasih
+
 ## 📑 Daftar Modul Praktikum
 
 | # | Modul | Materi |
