@@ -1,5 +1,5 @@
 # 🗞️ NewsHub – Aplikasi Portal Berita
-> Dokumentasi Praktikum Pemrograman Web 2  
+> Praktikum Pemrograman Web 2  
 > CodeIgniter 4 + Vue.js 3 | Universitas Pelita Bangsa, Bekasi  
 > Dosen Pengampu: Agung Nugroho | Tahun Akademik 2024/2025
 
