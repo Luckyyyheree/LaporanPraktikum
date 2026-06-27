@@ -1,424 +1,481 @@
-# Lab11Web_VueJS — Praktikum Web 2 (Praktikum 8–14)
-
-> **Mata Kuliah:** Pemrograman Web 2  
-> **Dosen:** Agung Nugroho (agung@pelitabangsa.ac.id)  
-> **Universitas:** Universitas Pelita Bangsa, Bekasi  
-> **Nama:** *Anthonius Dale Fernando*  
-> **NIM:** *312410162*  
-> **Kelas:** *I241A*
+# 🗞️ NewsHub – Aplikasi Portal Berita
+> Dokumentasi Praktikum Pemrograman Web 2  
+> CodeIgniter 4 + Vue.js 3 | Universitas Pelita Bangsa, Bekasi  
+> Dosen Pengampu: Agung Nugroho | Tahun Akademik 2024/2025
 
 ---
 
-## Daftar Isi
-
-- [Gambaran Umum](#gambaran-umum)
-- [Struktur Proyek](#struktur-proyek)
-- [Cara Menjalankan](#cara-menjalankan)
-- [Praktikum 8 — AJAX](#praktikum-8--ajax)
-- [Praktikum 9 — AJAX Pagination & Search](#praktikum-9--ajax-pagination--search)
-- [Praktikum 10 — REST API](#praktikum-10--rest-api)
-- [Praktikum 11 — VueJS Dasar](#praktikum-11--vuejs-dasar)
-- [Praktikum 12 — VueJS Komponen & Routing SPA](#praktikum-12--vuejs-komponen--routing-spa)
-- [Praktikum 13 — Autentikasi & Navigation Guards](#praktikum-13--autentikasi--navigation-guards)
-- [Praktikum 14 — Keamanan API, Token & Axios Interceptors](#praktikum-14--keamanan-api-token--axios-interceptors)
-- [Kesimpulan](#kesimpulan)
+**Nama  :** Anthonius Dale Fernando 
+**NIM   :** 312410162  
+**Kelas :** I241A  
 
 ---
 
-## Gambaran Umum
+## 📑 Daftar Modul Praktikum
 
-Proyek ini adalah hasil rangkaian praktikum Pemrograman Web 2 yang membangun sistem manajemen artikel berbasis arsitektur **Backend API + Frontend SPA** secara bertahap:
-
-| Layer    | Teknologi | Folder         |
-|----------|-----------|----------------|
-| Backend  | CodeIgniter 4 (PHP) | `lab7_php_ci/` |
-| Frontend | VueJS 3 (CDN)      | `lab8_vuejs/`  |
-| Database | MySQL (XAMPP)      | —              |
-
----
-
-## Struktur Proyek
-
-```
-Lab11Web_VueJS/
-│
-├── lab7_php_ci/                   ← Backend CodeIgniter 4
-│   └── app/
-│       ├── Controllers/
-│       │   ├── AjaxController.php     (Praktikum 8)
-│       │   ├── Artikel.php            (Praktikum 9)
-│       │   └── Api/
-│       │       ├── Post.php           (Praktikum 10)
-│       │       └── Auth.php           (Praktikum 13-14)
-│       ├── Filters/
-│       │   └── ApiAuthFilter.php      (Praktikum 14)
-│       ├── Models/
-│       │   ├── ArtikelModel.php
-│       │   ├── KategoriModel.php
-│       │   └── UserModel.php
-│       ├── Views/
-│       │   ├── ajax/index.php         (Praktikum 8)
-│       │   └── artikel/admin_index.php (Praktikum 9)
-│       └── Config/
-│           ├── Routes.php             (Praktikum 10 & 14)
-│           └── Filters.php            (Praktikum 14)
-│
-├── lab8_vuejs/                    ← Frontend VueJS SPA
-│   ├── index.html                     (Praktikum 11-14)
-│   └── assets/
-│       ├── css/style.css
-│       └── js/
-│           ├── app.js                 (Router + Interceptors)
-│           └── components/
-│               ├── Home.js            (Praktikum 12)
-│               ├── Artikel.js         (Praktikum 11-12)
-│               ├── About.js           (Tugas Praktikum 12)
-│               └── Login.js           (Praktikum 13)
-│
-└── README.md
-```
+| # | Modul | Materi |
+|---|-------|--------|
+| 01 | [Modul 1](#modul-1--mvc-dan-routing-dasar) | MVC & Routing Dasar |
+| 02 | [Modul 2](#modul-2--operasi-crud-artikel) | Operasi CRUD Artikel |
+| 03 | [Modul 3](#modul-3--layout-tampilan--view-cell) | Layout Tampilan & View Cell |
+| 04 | [Modul 4](#modul-4--sistem-login--filter-autentikasi) | Sistem Login & Filter Autentikasi |
+| 05 | [Modul 5](#modul-5--pagination--fitur-pencarian) | Pagination & Fitur Pencarian |
+| 06 | [Modul 6](#modul-6--relasi-antar-tabel--query-builder) | Relasi Antar Tabel & Query Builder |
+| 07 | [Modul 7](#modul-7--manajemen-upload-gambar) | Manajemen Upload Gambar |
+| 08 | [Modul 8](#modul-8--implementasi-ajax) | Implementasi AJAX |
+| 09 | [Modul 9](#modul-9--ajax-dinamis-pagination--pencarian) | AJAX Dinamis: Pagination & Pencarian |
+| 10 | [Modul 10](#modul-10--pengembangan-restful-api) | Pengembangan RESTful API |
+| 11 | [Modul 11](#modul-11--integrasi-vue-js-3) | Integrasi Vue.js 3 |
+| 12 | [Modul 12](#modul-12--spa-dengan-vue-router) | SPA dengan Vue Router |
+| 13 | [Modul 13](#modul-13--autentikasi-pada-spa) | Autentikasi pada SPA |
+| 14 | [Modul 14](#modul-14--keamanan-api-berbasis-token) | Keamanan API Berbasis Token |
 
 ---
 
-## Cara Menjalankan
+## 🔧 Stack Teknologi
 
-### Prasyarat
-- XAMPP (Apache + MySQL aktif)
+![PHP](https://img.shields.io/badge/PHP-8.x-777BB4?logo=php&logoColor=white)
+![CodeIgniter](https://img.shields.io/badge/CodeIgniter-4.x-EF4223?logo=codeigniter&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-8.x-4479A1?logo=mysql&logoColor=white)
+![Vue.js](https://img.shields.io/badge/Vue.js-3.x-4FC08D?logo=vue.js&logoColor=white)
+![jQuery](https://img.shields.io/badge/jQuery-3.6-0769AD?logo=jquery&logoColor=white)
+![Axios](https://img.shields.io/badge/Axios-1.x-5A29E4?logo=axios&logoColor=white)
+
+---
+
+## 💻 Kebutuhan Sistem
+
+- PHP versi 8.0 atau lebih baru
+- MySQL / MariaDB
+- XAMPP (Apache + MySQL)
 - Composer
-- CodeIgniter 4 sudah terinstall di folder `lab7_php_ci`
-
-### Langkah
-
-1. **Clone repository** ke folder `htdocs` XAMPP:
-   ```bash
-   cd C:/xampp/htdocs
-   git clone <url-repo> Lab11Web_VueJS
-   ```
-
-2. **Setup database** — jalankan SQL berikut di phpMyAdmin:
-   ```sql
-   CREATE DATABASE lab_ci4;
-   USE lab_ci4;
-
-   CREATE TABLE artikel (
-     id INT AUTO_INCREMENT PRIMARY KEY,
-     judul VARCHAR(200),
-     isi TEXT,
-     gambar VARCHAR(200),
-     status TINYINT DEFAULT 0,
-     slug VARCHAR(200),
-     id_kategori INT
-   );
-
-   CREATE TABLE kategori (
-     id_kategori INT AUTO_INCREMENT PRIMARY KEY,
-     nama_kategori VARCHAR(100),
-     slug_kategori VARCHAR(100)
-   );
-
-   CREATE TABLE user (
-     id INT AUTO_INCREMENT PRIMARY KEY,
-     username VARCHAR(100),
-     password VARCHAR(255),
-     token VARCHAR(255)
-   );
-
-   -- Contoh user (password: rahasia)
-   INSERT INTO user (username, password) VALUES
-   ('admin', '$2y$10$YourHashedPasswordHere');
-   ```
-
-   > **Catatan:** Generate hash password dengan `password_hash('rahasia', PASSWORD_DEFAULT)` di PHP.
-
-3. **Konfigurasi database CI4** — edit `lab7_php_ci/app/Config/Database.php`:
-   ```php
-   'database' => 'lab_ci4',
-   'username' => 'root',
-   'password' => '',
-   ```
-
-4. **Akses aplikasi:**
-   - Backend API : `http://localhost/Lab11Web_VueJS/lab7_php_ci/public/post`
-   - Frontend SPA: `http://localhost/Lab11Web_VueJS/lab8_vuejs/`
+- Node.js *(opsional, untuk tooling frontend)*
+- Postman *(untuk pengujian API)*
 
 ---
 
-## Praktikum 8 — AJAX
+## 🚀 Panduan Instalasi
 
-### Tujuan
-Memahami konsep AJAX (Asynchronous JavaScript and XML) dan cara menggunakannya di CodeIgniter 4 dengan jQuery.
-
-### Konsep
-AJAX memungkinkan halaman web memperbarui sebagian konten **tanpa reload penuh**. Browser mengirim request HTTP ke server di balik layar, server merespons dengan JSON, lalu JavaScript memperbarui DOM.
-
-### File yang Dibuat/Dimodifikasi
-| File | Keterangan |
-|------|------------|
-| `app/Controllers/AjaxController.php` | Controller AJAX: `getData()` mengembalikan JSON, `delete()` menghapus data |
-| `app/Views/ajax/index.php` | View dengan jQuery AJAX untuk load & hapus data tanpa reload |
-
-### Cara Kerja
-```
-Browser (klik tombol)
-  → jQuery $.ajax() → GET /ajax/getData
-  → AjaxController::getData() → ArtikelModel::findAll()
-  → Response JSON
-  → jQuery render ke DOM (tanpa reload)
+### Langkah 1 – Clone Repositori
+```bash
+git clone https://github.com/<username>/<repo-name>.git
+cd <repo-name>
 ```
 
-### Screenshot
-> *(Tempel screenshot tampilan tabel data yang dimuat via AJAX di sini)*
+### Langkah 2 – Konfigurasi Environment
+```bash
+# Duplikat file env
+cp env .env
+
+# Buka .env lalu ubah baris berikut:
+CI_ENVIRONMENT = development
+```
+
+### Langkah 3 – Konfigurasi Koneksi Database
+Edit bagian ini di file `.env`:
+```
+database.default.hostname = localhost
+database.default.database = db_newshub
+database.default.username = root
+database.default.password =
+database.default.DBDriver = MySQLi
+```
+
+### Langkah 4 – Siapkan Database
+```sql
+CREATE DATABASE db_newshub;
+```
+```bash
+php spark db:seed UserSeeder
+```
+
+### Langkah 5 – Jalankan Development Server
+```bash
+php spark serve
+```
+Akses di browser: `http://localhost:8080`
 
 ---
 
-## Praktikum 9 — AJAX Pagination & Search
+## 🗂️ Struktur Proyek
 
-### Tujuan
-Implementasi pagination dan pencarian artikel secara dinamis menggunakan AJAX tanpa reload halaman.
-
-### Konsep
-- `isAJAX()` pada CI4 mendeteksi apakah request berasal dari XMLHttpRequest.
-- Jika AJAX → kembalikan JSON; jika bukan → kembalikan view HTML.
-- Pagination berbasis nomor halaman dikirim sebagai query parameter.
-
-### File yang Dibuat/Dimodifikasi
-| File | Keterangan |
-|------|------------|
-| `app/Controllers/Artikel.php` | Metode `admin_index()` ditambah logika AJAX + pagination + search |
-| `app/Views/artikel/admin_index.php` | View dengan jQuery yang merender tabel & pagination dari JSON |
-
-### Alur AJAX Pagination
 ```
-User klik halaman 2
-  → jQuery fetchData('/admin/artikel?page=2&q=...')
-  → Artikel::admin_index() → paginate(10, page=2)
-  → JSON {artikel:[...], pager:{links:[...]}}
-  → renderArticles() + renderPagination()
-  → DOM diperbarui (tanpa reload)
+newshub/
+├── app/
+│   ├── Controllers/
+│   │   ├── Artikel.php
+│   │   ├── Page.php
+│   │   ├── User.php
+│   │   ├── AjaxController.php
+│   │   └── Api/
+│   │       ├── Post.php
+│   │       └── Auth.php
+│   ├── Models/
+│   │   ├── ArtikelModel.php
+│   │   ├── UserModel.php
+│   │   └── KategoriModel.php
+│   ├── Views/
+│   │   ├── layout/
+│   │   │   └── main.php
+│   │   ├── template/
+│   │   │   ├── header.php
+│   │   │   └── footer.php
+│   │   ├── artikel/
+│   │   │   ├── index.php
+│   │   │   ├── detail.php
+│   │   │   ├── admin_index.php
+│   │   │   ├── form_add.php
+│   │   │   └── form_edit.php
+│   │   ├── user/
+│   │   │   └── login.php
+│   │   ├── components/
+│   │   │   └── artikel_terkini.php
+│   │   └── ajax/
+│   │       └── index.php
+│   ├── Cells/
+│   │   └── ArtikelTerkini.php
+│   ├── Filters/
+│   │   ├── Auth.php
+│   │   └── ApiAuthFilter.php
+│   └── Config/
+│       ├── Routes.php
+│       └── Filters.php
+├── public/
+│   ├── index.php
+│   ├── style.css
+│   ├── gambar/
+│   └── assets/
+│       └── js/
+│           └── jquery-3.6.0.min.js
+├── frontend-vue/              ← Aplikasi Vue.js SPA
+│   ├── index.html
+│   └── assets/
+│       ├── css/
+│       │   └── style.css
+│       └── js/
+│           ├── app.js
+│           └── components/
+│               ├── Home.js
+│               ├── Artikel.js
+│               ├── Login.js
+│               └── About.js
+├── .env
+└── spark
 ```
-
-### Screenshot
-> *(Tempel screenshot fitur pagination dan pencarian di sini)*
 
 ---
 
-## Praktikum 10 — REST API
+## 📘 Dokumentasi Modul
 
-### Tujuan
-Membuat RESTful API menggunakan `ResourceController` CodeIgniter 4 dan mengujinya dengan Postman.
+### Modul 1 – MVC dan Routing Dasar
 
-### Konsep
-REST API adalah antarmuka yang memungkinkan klien (frontend, mobile app, dll.) mengakses resource server menggunakan HTTP method standar: GET, POST, PUT, DELETE.
+**Tujuan:** Memahami arsitektur MVC dan cara kerja routing pada CodeIgniter 4.
 
-| HTTP Method | Endpoint         | Fungsi              |
-|-------------|-----------------|---------------------|
-| GET         | `/post`          | Ambil semua artikel |
-| GET         | `/post/:id`      | Ambil 1 artikel     |
-| POST        | `/post`          | Tambah artikel baru |
-| PUT         | `/post/:id`      | Ubah artikel        |
-| DELETE      | `/post/:id`      | Hapus artikel       |
+**Konsep Inti:**
+- **Model** – lapisan data dan logika bisnis aplikasi
+- **View** – lapisan antarmuka yang dilihat pengguna
+- **Controller** – penghubung antara Model dan View
 
-### File yang Dibuat/Dimodifikasi
-| File | Keterangan |
-|------|------------|
-| `app/Controllers/Api/Post.php` | REST Controller dengan 5 method CRUD |
-| `app/Config/Routes.php` | `$routes->resource('post')` mendaftarkan semua endpoint sekaligus |
-
-### Pengujian dengan Postman
-
-**GET semua data:**
-```
-GET http://localhost/labci4/public/post
-→ 200 OK, JSON array artikel
-```
-
-**POST tambah data:**
-```
-POST http://localhost/labci4/public/post
-Body (x-www-form-urlencoded): judul=..., isi=...
-→ 201 Created
-```
-
-**PUT ubah data:**
-```
-PUT http://localhost/labci4/public/post/2
-Body: judul=..., isi=...
-→ 200 OK
-```
-
-**DELETE hapus data:**
-```
-DELETE http://localhost/labci4/public/post/2
-→ 200 OK
-```
-
-### Screenshot
-> *(Tempel screenshot hasil pengujian Postman untuk setiap method di sini)*
+**Yang Dikerjakan:**
+- Instalasi dan konfigurasi awal CI4
+- Pembuatan routing manual dan auto-routing
+- Controller `Page` untuk halaman statis (about, contact, faqs)
+- Pembuatan template global: `header.php` & `footer.php`
 
 ---
 
-## Praktikum 11 — VueJS Dasar
+### Modul 2 – Operasi CRUD Artikel
 
-### Tujuan
-Membangun antarmuka frontend menggunakan VueJS 3 untuk menampilkan dan memanipulasi data dari REST API CI4.
+**Tujuan:** Membangun fitur Create, Read, Update, Delete untuk data artikel.
 
-### Konsep
-VueJS adalah framework JavaScript berbasis **reactive data binding**. Perubahan data otomatis tercermin di tampilan (DOM) tanpa manipulasi DOM manual.
+**Struktur Tabel:**
+```sql
+CREATE TABLE artikel (
+    id      INT(11) AUTO_INCREMENT PRIMARY KEY,
+    judul   VARCHAR(200) NOT NULL,
+    isi     TEXT,
+    gambar  VARCHAR(200),
+    status  TINYINT(1) DEFAULT 0,
+    slug    VARCHAR(200)
+);
+```
 
-### Fitur yang Diimplementasikan
-- `v-for` — render list artikel dari API
-- `v-if` — tampil/sembunyikan modal form
-- `v-model` — two-way binding input form
-- `axios.get/post/put/delete` — komunikasi ke REST API
-- `mounted()` — load data saat komponen pertama kali ditampilkan
-
-### Screenshot
-> *(Tempel screenshot tampilan daftar artikel dan form modal di sini)*
+**Yang Dikerjakan:**
+- `ArtikelModel` menggunakan fitur bawaan CI4
+- Halaman daftar artikel untuk pengunjung umum
+- Halaman detail artikel berbasis slug URL
+- Panel admin: tambah, edit, dan hapus artikel
 
 ---
 
-## Praktikum 12 — VueJS Komponen & Routing SPA
+### Modul 3 – Layout Tampilan & View Cell
 
-### Tujuan
-Memecah aplikasi menjadi komponen-komponen modular dan menerapkan Vue Router untuk navigasi tanpa reload.
+**Tujuan:** Memusatkan pengelolaan tampilan menggunakan sistem Layout dan membuat komponen modular dengan View Cell.
 
-### Konsep
-- **Vue Components** — unit UI yang terisolasi dan dapat digunakan ulang (reusable).
-- **Vue Router** — menangani perpindahan "halaman" di sisi klien tanpa request ke server. Inilah yang disebut **Single Page Application (SPA)**.
+**Perbandingan Pendekatan:**
 
-### Rute yang Didaftarkan
-| Path       | Komponen | Keterangan              |
-|------------|----------|-------------------------|
-| `/`        | Home     | Halaman beranda         |
-| `/artikel` | Artikel  | Kelola artikel (CRUD)   |
-| `/about`   | About    | Profil pengembang       |
-| `/login`   | Login    | Form login              |
+| Aspek | Partial Include | View Layout |
+|-------|-----------------|-------------|
+| Cara kerja | Menyisipkan potongan file | View anak mewarisi template induk |
+| Kemudahan perawatan | Perlu ubah banyak file | Cukup ubah satu file layout |
 
-### Cara Navigasi SPA
-```html
-<!-- Router-link tidak reload halaman, hanya update URL hash -->
-<router-link to="/artikel">Kelola Artikel</router-link>
-
-<!-- Komponen dirender di sini berdasarkan URL aktif -->
-<router-view></router-view>
-```
-
-### Screenshot
-> *(Tempel screenshot perpindahan antar halaman tanpa reload di sini)*
+**Yang Dikerjakan:**
+- File layout utama `app/Views/layout/main.php`
+- Penggunaan `extend()`, `section()`, dan `endSection()`
+- Class `ArtikelTerkini` sebagai View Cell untuk widget sidebar
 
 ---
 
-## Praktikum 13 — Autentikasi & Navigation Guards
+### Modul 4 – Sistem Login & Filter Autentikasi
 
-### Tujuan
-Implementasi sistem login dan proteksi halaman di sisi klien menggunakan Vue Router Navigation Guards.
+**Tujuan:** Melindungi halaman admin dengan sistem autentikasi berbasis sesi.
 
-### Konsep
-**Navigation Guards** adalah "penjaga pintu" yang dieksekusi sebelum setiap navigasi rute. Digunakan untuk mengecek apakah pengguna boleh mengakses halaman tersebut.
-
-```javascript
-router.beforeEach((to, from, next) => {
-    const isAuthenticated = localStorage.getItem('isLoggedIn') === 'true';
-    if (to.meta.requiresAuth && !isAuthenticated) {
-        next('/login'); // Paksa ke halaman login
-    } else {
-        next(); // Izinkan akses
-    }
-});
+**Alur Autentikasi:**
+```
+Akses /admin → Filter periksa sesi → Belum login → Redirect ke /user/login
+                                   → Sudah login → Lanjut ke Controller
 ```
 
-### Alur Login
-```
-User isi form Login
-  → axios.post('/auth/login', {username, password})
-  → CI4 Auth::login() → cek database
-  → Jika valid: kembalikan token
-  → localStorage.setItem('userToken', token)
-  → localStorage.setItem('isLoggedIn', 'true')
-  → router.push('/artikel')
-```
-
-### Screenshot
-> *(Tempel screenshot halaman login dan redirect ke /artikel setelah berhasil login)*
+**Yang Dikerjakan:**
+- Tabel `user` dengan password di-hash (`password_hash`)
+- `UserModel` dan Controller `User`
+- Auth Filter sebagai middleware pelindung rute admin
+- Database Seeder untuk membuat akun awal
+- Fitur logout yang menghancurkan sesi aktif
 
 ---
 
-## Praktikum 14 — Keamanan API, Token & Axios Interceptors
+### Modul 5 – Pagination & Fitur Pencarian
 
-### Tujuan
-Mengamankan endpoint API di sisi server menggunakan CI4 Filters (Token-Based Authentication) dan mengotomatiskan pengiriman token dari frontend menggunakan Axios Interceptors.
+**Tujuan:** Memecah daftar artikel menjadi beberapa halaman dan menambahkan fungsionalitas pencarian.
 
-### Konsep
-
-#### Server-Side Security (CI4 Filter)
-Filter `ApiAuthFilter` memeriksa setiap request ke endpoint yang dilindungi:
-1. Apakah header `Authorization` ada?
-2. Apakah formatnya `Bearer <token>`?
-3. Jika tidak valid → tolak dengan HTTP 401 Unauthorized.
-
-#### Client-Side Token Injection (Axios Interceptors)
-Interceptor berfungsi sebagai "middleware" yang **mencegat setiap request keluar** dari VueJS dan menyuntikkan token secara otomatis ke header:
-
-```javascript
-axios.interceptors.request.use((config) => {
-    const token = localStorage.getItem('userToken');
-    if (token) {
-        config.headers['Authorization'] = 'Bearer ' + token;
-    }
-    return config;
-});
+**Implementasi Utama:**
+```php
+// Pagination + Search dalam satu pemanggilan
+$artikel = $model->like('judul', $q)->paginate(10);
+$pager   = $model->pager;
 ```
 
-### File yang Dibuat/Dimodifikasi
-| File | Keterangan |
-|------|------------|
-| `app/Filters/ApiAuthFilter.php` | Filter yang memeriksa token pada setiap request |
-| `app/Config/Filters.php` | Mendaftarkan alias `apiauth` |
-| `app/Config/Routes.php` | Menerapkan filter `apiauth` ke route POST/PUT/DELETE |
-| `assets/js/app.js` | Axios interceptors request & response |
-
-### Pengujian Keamanan
-
-**Tanpa token (harus ditolak):**
-```
-POST http://localhost/labci4/public/post
-(tanpa header Authorization)
-→ 401 Unauthorized
-{
-  "status": 401,
-  "error": 401,
-  "messages": "Akses Ditolak. Token tidak ditemukan pada request!"
-}
-```
-
-**Dengan token (harus berhasil):**
-```
-POST http://localhost/labci4/public/post
-Header: Authorization: Bearer <token_dari_login>
-Body: judul=..., isi=...
-→ 201 Created
-```
-
-### Screenshot
-> *(Tempel screenshot hasil 401 dari Postman saat tanpa token)*  
-> *(Tempel screenshot tab Network browser yang menampilkan header Authorization: Bearer ...)*
+**Yang Dikerjakan:**
+- Pagination dengan 10 artikel per halaman
+- Form pencarian berdasarkan judul artikel
+- Kata kunci pencarian tetap dipertahankan saat berpindah halaman
 
 ---
 
-## Kesimpulan
+### Modul 6 – Relasi Antar Tabel & Query Builder
 
-### Perbedaan Vue Router Navigation Guards vs CI4 Filters
+**Tujuan:** Menerapkan relasi One-to-Many antara tabel kategori dan artikel.
 
-| Aspek | Vue Router Navigation Guards | CodeIgniter 4 Filters |
-|-------|-----------------------------|-----------------------|
-| **Letak** | Sisi klien (browser) | Sisi server (PHP) |
-| **Cara kerja** | Mencegah navigasi ke rute tertentu di browser | Mencegat HTTP request sebelum sampai ke controller |
-| **Bisa dibobol?** | **Ya** — bisa dilewati dengan memanipulasi localStorage atau kode JS di browser | **Tidak** — berjalan di server, tidak bisa dimanipulasi dari luar |
-| **Fungsi utama** | UX: mencegah pengguna melihat halaman yang salah | Security: mencegah akses ilegal langsung ke database via API |
-| **Contoh skenario** | Redirect ke `/login` jika belum login | Tolak request POST tanpa token dengan 401 |
+**Diagram Relasi:**
+```
+kategori (1) ───────────── (Many) artikel
+id_kategori (PK)           id_kategori (FK)
+```
 
-**Kesimpulan:** Keduanya saling melengkapi. Navigation Guards memberikan pengalaman pengguna yang baik di sisi klien, sedangkan CI4 Filters adalah **lapisan keamanan yang sesungguhnya** di sisi server yang tidak dapat ditembus tanpa token yang valid. Keamanan harus selalu diterapkan di **kedua sisi** agar sistem benar-benar aman.
+**Yang Dikerjakan:**
+- Tabel `kategori` dengan foreign key di tabel `artikel`
+- `KategoriModel`
+- Query JOIN menggunakan Query Builder CI4
+- Filter artikel berdasarkan kategori di panel admin
 
 ---
 
-*Dikerjakan sebagai bagian dari praktikum Pemrograman Web 2 — Universitas Pelita Bangsa*
+### Modul 7 – Manajemen Upload Gambar
+
+**Tujuan:** Menambahkan fitur upload gambar pada form input artikel.
+
+**Alur Upload:**
+```
+Form (enctype multipart) → getFile() → move() → Simpan nama ke DB → Tampilkan via base_url
+```
+
+**Aturan Validasi File:**
+```php
+'gambar' => 'uploaded[gambar]|is_image[gambar]|max_size[gambar,2048]'
+```
+
+**Pertimbangan Keamanan:**
+
+| Risiko | Solusi |
+|--------|--------|
+| File berbahaya diunggah | Validasi tipe MIME & ekstensi |
+| Nama file tabrakan | Gunakan metode `$file->store()` |
+| Ukuran file terlalu besar | Terapkan validasi `max_size` |
+
+---
+
+### Modul 8 – Implementasi AJAX
+
+**Tujuan:** Melakukan operasi data tanpa reload halaman menggunakan AJAX dan jQuery.
+
+**Cara Kerja:**
+```
+Event (klik/input) → Request JS (GET/POST) → Server Proses → Response JSON → DOM Diperbarui
+```
+
+**Yang Dikerjakan:**
+- `AjaxController` dengan endpoint `getData()` dan `delete()`
+- jQuery AJAX untuk load, tambah, edit, dan hapus data secara real-time
+
+---
+
+### Modul 9 – AJAX Dinamis: Pagination & Pencarian
+
+**Tujuan:** Mengintegrasikan pagination dan pencarian secara asinkron tanpa reload.
+
+**Yang Dikerjakan:**
+- Backend mendeteksi request AJAX via `isAJAX()` dan mengembalikan JSON
+- Frontend merender tabel dan navigasi pagination secara dinamis
+- Pencarian dan filter kategori langsung tanpa reload halaman
+- Indikator loading saat proses pengambilan data
+
+---
+
+### Modul 10 – Pengembangan RESTful API
+
+**Tujuan:** Membangun REST API yang dapat diakses oleh berbagai jenis client.
+
+**Daftar Endpoint:**
+
+| Method | Endpoint | Fungsi |
+|--------|----------|--------|
+| GET | `/post` | Mengambil semua artikel |
+| GET | `/post/{id}` | Mengambil artikel berdasarkan ID |
+| POST | `/post` | Menambahkan artikel baru |
+| PUT | `/post/{id}` | Memperbarui artikel |
+| DELETE | `/post/{id}` | Menghapus artikel |
+
+Pendaftaran rute cukup satu baris:
+```php
+$routes->resource("post");
+```
+
+---
+
+### Modul 11 – Integrasi Vue.js 3
+
+**Tujuan:** Membangun frontend interaktif yang mengonsumsi REST API menggunakan Vue.js 3.
+
+**Yang Dikerjakan:**
+- Mengambil dan menampilkan daftar artikel dari API via Axios
+- Modal form untuk menambah dan mengedit artikel
+- Konfirmasi dan proses hapus artikel
+
+---
+
+### Modul 12 – SPA dengan Vue Router
+
+**Tujuan:** Mengembangkan Single Page Application (SPA) menggunakan Vue Router.
+
+**Peta Komponen:**
+```
+index.html
+└── #app
+    ├── <nav> (router-link)
+    └── <router-view>
+        ├── Home.js     → path: "/"
+        ├── Artikel.js  → path: "/artikel"
+        └── About.js    → path: "/about"
+```
+
+**Yang Dikerjakan:**
+- Vue Router dengan `createWebHashHistory`
+- Navigasi antar halaman tanpa reload browser
+- Halaman About berisi profil mahasiswa
+
+---
+
+### Modul 13 – Autentikasi pada SPA
+
+**Tujuan:** Melindungi halaman SPA menggunakan sistem login dan Navigation Guards.
+
+**Alur Autentikasi:**
+```
+Login → Terima Token → Simpan di localStorage
+      → Akses /artikel → Guard periksa isLoggedIn
+                        → Belum login → Redirect /login
+                        → Sudah login → Tampilkan halaman
+```
+
+**Yang Dikerjakan:**
+- Komponen `Login.js` dengan form autentikasi
+- Penyimpanan token dan status login di `localStorage`
+- `router.beforeEach()` sebagai Navigation Guard
+- Tombol logout kondisional di navbar
+
+---
+
+### Modul 14 – Keamanan API Berbasis Token
+
+**Tujuan:** Mengamankan endpoint API di sisi server dan mengotomatisasi pengiriman token dari frontend.
+
+**Arsitektur Keamanan End-to-End:**
+```
+[Vue.js] Login → Terima Token → Simpan di localStorage
+               ↓
+[Axios Interceptor] Sisipkan Header: Authorization: Bearer <token>
+               ↓
+[CI4 ApiAuthFilter] Validasi token → Izinkan / Tolak (401 Unauthorized)
+```
+
+**Perbandingan Keamanan Client vs Server:**
+
+| Aspek | Vue Router Guards | CI4 API Filter |
+|-------|-------------------|----------------|
+| Lokasi eksekusi | Browser (sisi client) | Server |
+| Objek perlindungan | Halaman/tampilan | Endpoint & data API |
+| Bisa dibobol? | Ya (via DevTools) | Tidak |
+| Fungsi utama | UX – mencegah akses halaman | Keamanan nyata – mencegah akses data |
+
+---
+
+## 🗄️ Skema Database Lengkap
+
+```sql
+-- Tabel Artikel
+CREATE TABLE artikel (
+    id           INT(11) AUTO_INCREMENT PRIMARY KEY,
+    judul        VARCHAR(200) NOT NULL,
+    isi          TEXT,
+    gambar       VARCHAR(200),
+    status       TINYINT(1) DEFAULT 0,
+    slug         VARCHAR(200),
+    id_kategori  INT(11),
+    CONSTRAINT fk_kategori_artikel
+        FOREIGN KEY (id_kategori) REFERENCES kategori(id_kategori)
+);
+
+-- Tabel Kategori
+CREATE TABLE kategori (
+    id_kategori   INT(11) AUTO_INCREMENT PRIMARY KEY,
+    nama_kategori VARCHAR(100) NOT NULL,
+    slug_kategori VARCHAR(100)
+);
+
+-- Tabel User
+CREATE TABLE user (
+    id           INT(11) AUTO_INCREMENT PRIMARY KEY,
+    username     VARCHAR(200) NOT NULL,
+    useremail    VARCHAR(200),
+    userpassword VARCHAR(200)
+);
+```
+
+---
+
+## 🔑 Akun Default
+
+| Field | Value |
+|-------|-------|
+| Email | `admin@email.com` |
+| Password | `admin123` |
+
+> ⚠️ Password disimpan dalam format hash menggunakan fungsi `password_hash()`.
+
+---
+
+## 📄 Lisensi
+
+Proyek ini dikembangkan semata-mata untuk keperluan akademik dalam rangka Praktikum Pemrograman Web 2.  
+**Universitas Pelita Bangsa, Bekasi** © 2024/2025
