@@ -3,9 +3,9 @@
 > **Mata Kuliah:** Pemrograman Web 2  
 > **Dosen:** Agung Nugroho (agung@pelitabangsa.ac.id)  
 > **Universitas:** Universitas Pelita Bangsa, Bekasi  
-> **Nama:** *(isi nama Anda)*  
-> **NIM:** *(isi NIM Anda)*  
-> **Kelas:** *(isi kelas Anda)*
+> **Nama:** *Anthonius Dale Fernando*  
+> **NIM:** *312410162*  
+> **Kelas:** *I241A*
 
 ---
 
