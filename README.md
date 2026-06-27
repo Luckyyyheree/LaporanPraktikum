@@ -6,7 +6,9 @@
 ---
 
 **Nama  :** Anthonius Dale Fernando
+
 **NIM   :** 312410162  
+
 **Kelas :** I241A  
 
 ---
